@@ -1,5 +1,5 @@
 <p align="center">
-    <img src="https://github.com/shogun-olives/cnn-slurm/media/usc.png"/>
+    <img src="https://github.com/shogun-olives/cnn-slurm/blob/main/media/usc.png"/>
 </p>
 <p align="center"><h1 align="center">CNN Slurm</h1></P>
 
