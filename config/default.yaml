@@ -1,0 +1,6 @@
+files:
+    root: ./data
+
+model:
+    batch_size: 128
+    num_workers: 4

@@ -1,7 +1,7 @@
 <p align="center">
-    <img src="https://github.com/shogun-olives/cnn-slurm/media/usc.png"/>
+    <img src="https://github.com/shogun-olives/cnn-slurm/blob/main/media/usc.png"/>
 </p>
-<p align="center"><h1 align="center">CNN Slurm</h1></P>
+<p align="center"><h1 align="center">Slurm CNN</h1></P>
 
 ![Python](https://img.shields.io/badge/python-v3.6+-blue.svg)
 ![Dependencies](https://img.shields.io/badge/dependencies-up%20to%20date-brightgreen.svg)
@@ -12,6 +12,12 @@
 Python script for training Convolutional Neural Networks (CNN)
 through a Command Line Interface (CLI) or Slurm Job Script.
 Gives users full model customization from CLI
+
+<br>
+
+# Purpose
+
+Final Project for USC CARC's ITP-450
 
 <br>
 
