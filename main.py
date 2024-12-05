@@ -80,6 +80,7 @@ def main(cli_args: argparse.Namespace) -> None:
     # Training loop
     best_acc = 0
     epochs = args["model"]["epochs"]
+    interval = args["files"]["save_interval"]
     train_losses, train_accs = np.zeros(epochs), np.zeros(epochs)
     test_losses, test_accs = np.zeros(epochs), np.zeros(epochs)
 
@@ -122,7 +123,7 @@ def main(cli_args: argparse.Namespace) -> None:
                     "test_acc": test_acc,
                     "config": args,
                 },
-                f"{cli_args.dest}/model_{epoch//args["files"]["save_interval"]}.pth",
+                f"{cli_args.dest}/model_{epoch//interval}.pth",
             )
             m.ProgressBar.write(
                 f"Epoch: {epoch} Test Loss: {test_loss:.4f}, Test Acc: {test_acc:.2f}%"
