@@ -1,21 +1,21 @@
 import yaml
 
 
-def load_config() -> dict:
+def load_config(fn: str = "./config/config.yaml") -> dict:
     """
     Load the configuration data.
+
+    Args:
+        fn (str, optional): The configuration file. Defaults to "./config/config.py".
 
     Returns:
         dict: The configuration data.
     """
     # Get config data
-    with open("./config/default.yaml", "r") as file:
-        default = yaml.safe_load(file)
-
-    with open("./config/config.yaml", "r") as file:
+    with open(fn, "r") as file:
         config = yaml.safe_load(file)
 
-    return merge_dicts(default, config)
+    return fmt_dict(config)
 
 
 def merge_dicts(dict1: dict, dict2: dict) -> dict:
@@ -39,3 +39,46 @@ def merge_dicts(dict1: dict, dict2: dict) -> dict:
             temp[key] = dict2[key]
 
     return temp
+
+
+def fmt_dict(dictionary: dict) -> dict:
+    """
+    Format a dictionary.
+
+    Args:
+        dictionary (dict): The dictionary to format.
+
+    Returns:
+        dict: The formatted dictionary.
+    """
+    for key in dictionary.keys():
+        if isinstance(dictionary[key], dict):
+            dictionary[key] = fmt_dict(dictionary[key])
+        else:
+            dictionary[key] = fmt_sci_num(dictionary[key])
+
+    return dictionary
+
+
+def fmt_sci_num(val: str) -> float | int | str:
+    """
+    Format a scientific number from a string to a numeric.
+
+    Args:
+        val (str): The scientific number.
+
+    Returns:
+        float | str: The formatted number.
+    """
+    if not isinstance(val, str):
+        return val
+
+    try:
+        temp = float(val)
+    except ValueError:
+        return val
+
+    if temp.is_integer():
+        return int(temp)
+    else:
+        return temp

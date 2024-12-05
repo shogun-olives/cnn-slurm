@@ -32,7 +32,7 @@ class ProgressMessage:
         )
 
 
-class Progress:
+class ProgressBar:
     """
     Progress bar for loops
 
@@ -62,24 +62,24 @@ class Progress:
             iterator = range(iterator)
         self.iterator = iterator
         self.title = title
-        self.write_end = write_end if len(Progress.Existing) == 0 else False
+        self.write_end = write_end if len(ProgressBar.Existing) == 0 else False
         self.msg = None
         self.length = length
 
     def __iter__(self):
         message = ProgressMessage(len(self.iterator), self.title, self.length)
 
-        if Progress.Existing:
-            print(Progress.Existing[-1])
+        if ProgressBar.Existing:
+            print(ProgressBar.Existing[-1])
 
-        Progress.Existing.append(self)
+        ProgressBar.Existing.append(self)
         for i, x in enumerate(self.iterator):
             self.msg = message(i)
             print(self.msg, end="\r")
             yield x
 
-        Progress.Existing.pop()
-        if Progress.Existing:
+        ProgressBar.Existing.pop()
+        if ProgressBar.Existing:
             print("\033[K\033[F\033[K", end="")
 
         if self.write_end:
@@ -98,8 +98,8 @@ class Progress:
 def main() -> None:
     # Test of progress bar
     num = 50
-    for i in Progress(num, "outter", 0):
-        for j in Progress(num, str(i)):
+    for i in ProgressBar(num, "outter", 0):
+        for j in ProgressBar(num, str(i)):
             time.sleep(0.2)
 
 

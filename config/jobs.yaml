@@ -1,0 +1,16 @@
+1:
+    name: 1gpu_1node
+    nodes: 1
+    gpus_per_node: 1
+
+2:
+    name: 4gpu_1node
+    nodes: 1
+    gpus_per_node: 4
+
+3:
+    name: 4gpu_2node
+    nodes: 2
+    gpus_per_node: 2
+4:
+    name: example

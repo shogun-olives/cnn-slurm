@@ -1,2 +1,38 @@
-model:
+# File heirarchy within model directory
+files:
+    log: ./logs
+    checkpoints: ./checkpoints
+
+# Data importing
+data:
     name: CIFAR100
+    padding: 4
+    num_workers: 4
+    batch_size: 128
+
+# Model structure
+model:
+    name: resnet50
+    epochs: 10
+    save_interval: 20
+
+# criterion features
+criterion:
+    name: CrossEntropyLoss
+
+# Optimizer features
+optimizer:
+    name: Adam
+
+    args:
+        lr: 0.001
+        weight_decay: 1e-4
+
+# Scheduler features
+scheduler:
+    name: ReduceLROnPlateau
+
+    args:
+        mode: min
+        patience: 3
+        factor: 0.1
