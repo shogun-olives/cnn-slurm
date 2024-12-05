@@ -162,5 +162,5 @@ cython_debug/
 #.idea/
 
 # data should be locally stored
-data/
-model/
+/data/
+/model/

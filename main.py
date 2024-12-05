@@ -6,7 +6,6 @@ from torch.utils.tensorboard import SummaryWriter
 import torchvision
 import torch
 import numpy as np
-import warnings
 
 
 def main(cli_args: argparse.Namespace) -> None:
@@ -51,7 +50,6 @@ def main(cli_args: argparse.Namespace) -> None:
     classes: list[str] = train_loader.dataset.classes
     dims: tuple[int, int] = train_loader.dataset[0][0].shape
 
-    # get the number of in channels
     # load model
     model = m.get_model(
         name=args["model"]["name"], depth=dims[0], num_classes=len(classes)
@@ -85,6 +83,7 @@ def main(cli_args: argparse.Namespace) -> None:
     test_losses, test_accs = np.zeros(epochs), np.zeros(epochs)
 
     for epoch in m.ProgressBar(range(epochs), title="Training"):
+        # Train
         train_loss, train_acc = m.train_epoch(
             model=model,
             train_loader=train_loader,
@@ -112,6 +111,7 @@ def main(cli_args: argparse.Namespace) -> None:
         writer.add_scalar("Loss/test", test_loss, epoch)
         writer.add_scalar("Accuracy/test", test_acc, epoch)
 
+        # Save model at checkpoints
         if epoch % args["model"]["save_interval"] == 0:
             torch.save(
                 {
@@ -166,11 +166,7 @@ if __name__ == "__main__":
         description="Train a model with the given configuration."
     )
     parser.add_argument(
-        "--dest",
-        type=str,
-        required=True,
-        default="test",
-        help="Directory to save the output.",
+        "--dest", type=str, required=True, help="Directory to save the output."
     )
     cli_args = parser.parse_args()
 
