@@ -7,7 +7,7 @@ class ProgressMessage:
     """
 
     def __init__(self, total: int, title: str = None, length: int = 50):
-        self.pretext = f"{title:<15}  |" if title else "|"
+        self.pretext = f"{title:<18}  |" if title else "|"
         self.total = total
         self.start = time.time()
         self.length = length if length < 50 else 50 if length > 0 else 1
@@ -20,7 +20,7 @@ class ProgressMessage:
             prog_perc = percentage * self.length
             prog_bar = (
                 "#" * int(prog_perc)
-                + str(int(prog_perc * self.length * 10) % 10)
+                + str(int(prog_perc * 10) % 10)
                 + " " * (self.length - int(prog_perc) - 1)
             )
         t_delta = time.time() - self.start

@@ -1,7 +1,7 @@
 from torch.utils.data import DataLoader
 from torchvision import transforms
 from torchvision import datasets
-from ..utils import get_module, ProgressBar
+from ..utils import get_module
 import torch
 
 
@@ -34,6 +34,7 @@ def load_dataset(
     temp_loader = DataLoader(
         temp_dataset, batch_size=batch_size, shuffle=False, num_workers=num_workers
     )
+    print("\r\033[K\033[F\033[K", end="")
     mean, std_dev, size = get_dataset_info(temp_loader)
 
     # get transformation functions
@@ -64,9 +65,11 @@ def load_dataset(
     train_loader = DataLoader(
         train_dataset, batch_size=batch_size, shuffle=True, num_workers=num_workers
     )
+    print("\r\033[K\033[F\033[K", end="")
     test_loader = DataLoader(
         test_dataset, batch_size=batch_size, shuffle=False, num_workers=num_workers
     )
+    print("\r\033[K\033[F\033[K", end="")
 
     return train_loader, test_loader
 
@@ -88,7 +91,7 @@ def get_dataset_info(
     num_samples = 0
     image_size = None  # To store (height, width) of a single image
 
-    for images, _ in ProgressBar(data_loader, title="calculating > mean, std"):
+    for images, _ in data_loader:
         # Batch size and number of channels
         batch_size = images.size(0)
         num_samples += batch_size

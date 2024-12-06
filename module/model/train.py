@@ -37,7 +37,6 @@ def train_epoch(
 
         optimizer.zero_grad()
         outputs = model(inputs)
-        print(f"\n\noutputs shape: {outputs.shape}, targets shape: {targets.shape}\n\n")
         loss = criterion(outputs, targets)
         loss.backward()
         optimizer.step()

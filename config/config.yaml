@@ -13,7 +13,7 @@ data:
 # Model structure
 model:
     name: resnet50
-    epochs: 10
+    epochs: 100
     save_interval: 20
 
 # criterion features

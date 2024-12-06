@@ -1,12 +1,12 @@
-import os
-import shutil
-import argparse
-import module as m
 from torch.utils.tensorboard import SummaryWriter
-import torchvision
-import torch
 from datetime import datetime
+import torchvision
 import numpy as np
+import module as m
+import argparse
+import shutil
+import torch
+import os
 
 
 def main(cli_args: argparse.Namespace) -> None:
@@ -39,6 +39,7 @@ def main(cli_args: argparse.Namespace) -> None:
     device = torch.device("cuda" if torch.cuda.is_available() else "cpu")
 
     # load dataset
+    print("Loading Dataset...")
     train_loader, test_loader = m.load_dataset(
         root=data_dir,
         name=args["data"]["name"],
@@ -52,13 +53,14 @@ def main(cli_args: argparse.Namespace) -> None:
     dims: tuple[int, int] = train_loader.dataset[0][0].shape
 
     # load model
+    print("Preparing Model...")
     model = m.get_model(
         name=args["model"]["name"], depth=dims[0], num_classes=len(classes)
     )
     model.to(device)
 
     # get criterion, optimizer, and scheduler
-    criterion = m.get_module(torch.nn, args["criterion"]["name"])
+    criterion = m.get_module(torch.nn, args["criterion"]["name"])()
     optimizer = m.get_optimizer(
         model, args["optimizer"]["name"], **args["optimizer"]["args"]
     )
@@ -124,7 +126,7 @@ def main(cli_args: argparse.Namespace) -> None:
                     "test_acc": test_acc,
                     "config": args,
                 },
-                f"{cli_args.dest}/model_{epoch//interval}.pth",
+                f"{cli_args.dest}/checkpoints/model_{epoch//interval}.pth",
             )
             m.ProgressBar.write(
                 f"Epoch: {epoch} Test Loss: {test_loss:.4f}, Test Acc: {test_acc:.2f}%"
@@ -151,10 +153,6 @@ def main(cli_args: argparse.Namespace) -> None:
             scheduler.step(test_loss)
         else:
             scheduler.step()
-
-    # Visualize model
-    # TODO ADD VISUALS
-    model_name = f"{cli_args.dest}/model_best.pth"
 
     # Close TensorBoard
     writer.flush()
