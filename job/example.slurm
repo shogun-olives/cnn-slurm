@@ -3,7 +3,7 @@
 #SBATCH --partition=gpu
 #SBATCH --nodes=1
 #SBATCH --ntasks=1
-#SBATCH --cpus_per_task=4
+#SBATCH --cpus-per-task=4
 #SBATCH --mem=64G
 #SBATCH --gres=gpu:a40:1
 #SBATCH --time=2:0:00
@@ -12,6 +12,6 @@
 export GIT_PYTHON_REFRESH=quiet
 conda init
 source ~/.bashrc
-conda activate torch-env
+conda activate slurm-cnn
 
 python ../main.py --dest ./model/example

@@ -45,7 +45,7 @@ def create_job(
         "partition": partition,
         "nodes": nodes,
         "ntasks": ntasks,
-        "cpus_per_task": cpus_per_task,
+        "cpus-per-task": cpus_per_task,
         "mem": f"{mem}G",
         "gres": f"gpu:{gpu_type}:{gpus_per_node}",
         "time": f"{time//60}:{time%60}:00",
