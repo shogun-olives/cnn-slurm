@@ -166,10 +166,11 @@ if __name__ == "__main__":
     parser = argparse.ArgumentParser(
         description="Train a model with the given configuration."
     )
+    now = datetime.now().strftime("%Y-%m-%d_%Hh%Mm")
     parser.add_argument(
         "--dest",
         type=str,
-        default=f"model_{datetime.now().strftime("%Y-%m-%d_%Hh%Mm")}",
+        default=f"model_{now}",
         help="Directory to save the output.",
     )
     cli_args = parser.parse_args()
