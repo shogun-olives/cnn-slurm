@@ -3,6 +3,7 @@ import os
 
 def create_job(
     name: str,
+    env: str,
     script_dir: str = "./job",
     output_dir: str = "./model",
     partition: str = "gpu",
@@ -10,7 +11,7 @@ def create_job(
     ntasks: int = 1,
     cpus_per_task: int = 4,
     mem: int = 64,
-    gpu_type: str = "v100",
+    gpu_type: str = "a40",
     gpus_per_node: int = 1,
     time: int = 120,
 ) -> None:
@@ -19,8 +20,9 @@ def create_job(
 
     Args:
         name (str): Name of the job.
-        script_dir (str): Directory to save the job script.
-        output_dir (str): Directory to save the output.
+        env (str): Name of the conda environment.
+        script_dir (str): Directory to save the job script relative to main.
+        output_dir (str): Directory to save the output relative to main.
         partition (str): Partition to run the job.
         nodes (int): Number of nodes.
         ntasks (int): Number of tasks.
@@ -47,14 +49,14 @@ def create_job(
         "mem": f"{mem}G",
         "gres": f"gpu:{gpu_type}:{gpus_per_node}",
         "time": f"{time//60}:{time%60}:00",
-        "output": f"{dest_dir}/{name}_%j.log",
+        "output": f".{dest_dir}/{name}_%j.log",
     }
 
     setup = [
         "export GIT_PYTHON_REFRESH=quiet",
         "conda init",
         "source ~/.bashrc",
-        "conda activate yolo_v5",
+        f"conda activate {env}",
     ]
 
     with open(fn, "w") as f:

@@ -11,7 +11,6 @@ def get_model(name: str, depth: int, num_classes: int) -> nn.Module:
     Args:
         name (str): The name of the model.
         depth (int): The depth of the input image.
-        size (tuple[int, int]): The size of the input image.
         num_classes (int): The number of classes.
 
     Returns:

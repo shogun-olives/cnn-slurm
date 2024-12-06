@@ -5,13 +5,13 @@
 #SBATCH --ntasks=1
 #SBATCH --cpus_per_task=4
 #SBATCH --mem=64G
-#SBATCH --gres=gpu:v100:1
+#SBATCH --gres=gpu:a40:1
 #SBATCH --time=2:0:00
-#SBATCH --output=./model/example/example_%j.log
+#SBATCH --output=../model/example/example_%j.log
 
 export GIT_PYTHON_REFRESH=quiet
 conda init
 source ~/.bashrc
-conda activate yolo_v5
+conda activate torch-env
 
 python ../main.py --dest ./model/example

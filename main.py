@@ -5,6 +5,7 @@ import module as m
 from torch.utils.tensorboard import SummaryWriter
 import torchvision
 import torch
+from datetime import datetime
 import numpy as np
 
 
@@ -78,7 +79,7 @@ def main(cli_args: argparse.Namespace) -> None:
     # Training loop
     best_acc = 0
     epochs = args["model"]["epochs"]
-    interval = args["files"]["save_interval"]
+    interval = args["model"]["save_interval"]
     train_losses, train_accs = np.zeros(epochs), np.zeros(epochs)
     test_losses, test_accs = np.zeros(epochs), np.zeros(epochs)
 
@@ -166,7 +167,10 @@ if __name__ == "__main__":
         description="Train a model with the given configuration."
     )
     parser.add_argument(
-        "--dest", type=str, required=True, help="Directory to save the output."
+        "--dest",
+        type=str,
+        default=f"model_{datetime.now().strftime("%Y-%m-%d_%Hh%Mm")}",
+        help="Directory to save the output.",
     )
     cli_args = parser.parse_args()
 
