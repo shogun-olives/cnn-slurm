@@ -1,17 +1,17 @@
 #!/bin/bash
-#SBATCH --job-name=example
+#SBATCH --job-name=4gpu_2node
 #SBATCH --partition=gpu
-#SBATCH --nodes=1
+#SBATCH --nodes=2
 #SBATCH --ntasks=1
 #SBATCH --cpus-per-task=4
 #SBATCH --mem=64G
-#SBATCH --gres=gpu:a40:1
+#SBATCH --gres=gpu:a40:2
 #SBATCH --time=2:0:00
-#SBATCH --output=../model/example_%j.log
+#SBATCH --output=../model/4gpu_2node_%j.log
 
 export GIT_PYTHON_REFRESH=quiet
 conda init
 source ~/.bashrc
 conda activate torch-env
 
-python ../main.py --dest ./model/example
+python ../main.py --dest ./model/4gpu_2node

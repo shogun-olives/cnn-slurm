@@ -1,4 +1,4 @@
-from ..utils import ProgressBar
+from ..util import ProgressBar
 import torch
 import numpy as np
 

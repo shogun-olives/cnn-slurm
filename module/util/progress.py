@@ -97,10 +97,11 @@ class ProgressBar:
 
 def main() -> None:
     # Test of progress bar
-    num = 50
-    for i in ProgressBar(num, "outter", 0):
-        for j in ProgressBar(num, str(i)):
-            time.sleep(0.2)
+    num = 100
+    for i in ProgressBar(10, "outter"):
+        for _ in ProgressBar(15, str(i)):
+            for _ in ProgressBar(900, "inner"):
+                pass
 
 
 if __name__ == "__main__":

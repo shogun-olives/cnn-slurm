@@ -1,4 +1,4 @@
-from ..utils import get_module
+from ..util import get_module
 from torchvision import models
 from torch import nn
 from torch import optim

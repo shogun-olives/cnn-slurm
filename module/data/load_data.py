@@ -1,7 +1,7 @@
 from torch.utils.data import DataLoader
 from torchvision import transforms
 from torchvision import datasets
-from ..utils import get_module
+from ..util import get_module
 import torch
 
 

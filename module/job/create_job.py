@@ -49,7 +49,7 @@ def create_job(
         "mem": f"{mem}G",
         "gres": f"gpu:{gpu_type}:{gpus_per_node}",
         "time": f"{time//60}:{time%60}:00",
-        "output": f".{dest_dir}/{name}_%j.log",
+        "output": f"../model/{name}_%j.log",
     }
 
     setup = [
