@@ -7,7 +7,7 @@
 #SBATCH --mem=64G
 #SBATCH --gres=gpu:a40:2
 #SBATCH --time=2:0:00
-#SBATCH --output=$(dirname "$(realpath "$0")")/4gpu_2node_%j.log
+#SBATCH --output=$(dirname "$(realpath "$0")")/../logs/4gpu_2node_%j.log
 
 export GIT_PYTHON_REFRESH=quiet
 conda init
