@@ -15,6 +15,10 @@ def main(cli_args: argparse.Namespace) -> None:
     # guarantee that the current working directory is the directory that main is in
     os.chdir(os.path.dirname(os.path.realpath(__file__)))
 
+    # delete temp files
+    if os.path.exists("./log/temp.txt"):
+        shutil.rmtree("./log/temp.txt")
+
     # guarantee that destination is within ./model, if not, then put it in ./model
     if not cli_args.dest.startswith("./model"):
         cli_args.dest = f"./model/{cli_args.dest}"
