@@ -40,6 +40,7 @@ def create_job(
     dest_dir = f"{output_dir}/{name}"
     fn = f"{script_dir}/{name}.slurm"
 
+    # arguments
     args = {
         "job-name": name,
         "partition": partition,
@@ -49,9 +50,10 @@ def create_job(
         "mem": f"{mem}G",
         "gres": f"gpu:{gpu_type}:{gpus_per_node}",
         "time": f"{time//60}:{time%60}:00",
-        "output": f"../log/{name}_%j.log",
+        "output": f'$(dirname "$(realpath "$0")")/{name}_%j.log',
     }
 
+    # commands
     setup = [
         "export GIT_PYTHON_REFRESH=quiet",
         "conda init",
@@ -64,4 +66,35 @@ def create_job(
         for key, value in args.items():
             f.write(f"#SBATCH --{key}={value}\n")
         f.write("\n" + "\n".join(setup) + "\n\n")
-        f.write(f"python ../main.py --dest {dest_dir}")
+        f.write(f'python $(dirname "$(realpath "$0")")/../main.py --dest {dest_dir}')
+
+
+"""
+#!/bin/bash
+#SBATCH --job-name=example
+#SBATCH --partition=gpu
+#SBATCH --nodes=1
+#SBATCH --ntasks=1
+#SBATCH --cpus-per-task=4
+#SBATCH --mem=64G
+#SBATCH --gres=gpu:a40:1
+#SBATCH --time=2:0:00
+
+# Determine the script directory
+SCRIPT_DIR=$(dirname "$(realpath "$0")")
+
+# Ensure the log directory exists
+LOG_DIR="$SCRIPT_DIR/../log"
+mkdir -p "$LOG_DIR"
+
+# Set the output log file path
+#SBATCH --output=$LOG_DIR/example_%j.log
+
+export GIT_PYTHON_REFRESH=quiet
+conda init
+source ~/.bashrc
+conda activate torch-env
+
+# Run the Python script with the correct path
+python "$SCRIPT_DIR/../main.py" --dest "$SCRIPT_DIR/../model/example"
+"""
