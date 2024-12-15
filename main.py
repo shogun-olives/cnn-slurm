@@ -116,6 +116,7 @@ def main(cli_args: argparse.Namespace) -> None:
 
         # Save model at checkpoints
         if epoch % args["model"]["save_interval"] == 0:
+            os.mkdir(f"{cli_args.dest}/checkpoints", exist_ok=True)
             torch.save(
                 {
                     "epoch": epoch,
