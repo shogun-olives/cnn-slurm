@@ -7,7 +7,7 @@
 #SBATCH --mem=64G
 #SBATCH --gres=gpu:a40:1
 #SBATCH --time=2:0:00
-#SBATCH --output=../model/example_%j.log
+#SBATCH --output=../log/example_%j.log
 
 export GIT_PYTHON_REFRESH=quiet
 conda init
